@@ -1,40 +1,41 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Book, Library, Problem } from "./types";
+import { Path, Problem, Street } from "./types";
 
 export function loadFile(filePath: string): Problem {
     const content = fs.readFileSync(path.resolve(process.cwd(), filePath), {
         encoding: "utf-8"
     });
-    const [header, scores, ...libraryLines] = content.trim().split("\n");
+    const [header, ...lines] = content.trim().split("\n");
+    const [D, I, S, V, F] = header.split(" ").map(x => parseInt(x, 10));
 
-    const books: Book[] = scores.split(" ").map((value, index) => ({
-        id: index,
-        score: parseInt(value)
-    }));
+    const rawStreets = lines.slice(0, S);
+    const rawPaths = lines.slice(S);
 
-    const libraries: Library[] = [];
+    const streets: Street[] = rawStreets.map(rawStreet => {
+        const [B, E, name, L] = rawStreet.split(" ");
+        return {
+            startIntersection: parseInt(B, 10),
+            endIntersection: parseInt(E, 10),
+            name,
+            travelTime: parseInt(L, 10)
+        }
+    });
 
-    for (let i = 0; i < libraryLines.length / 2; i++) {
-        libraries.push({
-            id: i,
-            signup: parseInt(libraryLines[2 * i].split(" ")[1]),
-            booksPerDay: parseInt(libraryLines[2 * i].split(" ")[2]),
-            books: libraryLines[2 * i + 1]
-                .split(" ")
-                .map(index => books[parseInt(index)])
-        });
-    }
-
-    const [B, L, D] = header.split(" ").map(v => parseInt(v));
-    if (books.length !== B || libraries.length !== L) {
-        throw new Error("load error");
-    }
+    const paths: Path[] = rawPaths.map(rawPath => {
+        const [P, ...names] = rawPath.split(" ");
+        return {
+            streetNames: names
+        }
+    })
 
     return {
-        name: filePath,
-        libraries,
-        books,
-        duration: D
-    };
+        Duration: D,
+        NbIntersections: I,
+        NbStreets: S,
+        NbCars: V,
+        BonusPoints: F,
+        streets,
+        paths,
+    }
 }

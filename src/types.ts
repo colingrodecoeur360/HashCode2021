@@ -1,21 +1,33 @@
 export interface Problem {
+    Duration: number;
+    NbIntersections: number;
+    NbStreets: number;
+    NbCars: number;
+    BonusPoints: number;
+    streets: Street[];
+    paths: Path[];
+}
+
+export interface Street {
+    startIntersection: Intersection;
+    endIntersection: Intersection;
     name: string;
-    libraries: Library[];
-    books: Book[];
-    duration: number;
+    travelTime: number;
 }
-export interface Library {
-    id: number;
-    books: Book[];
-    signup: number;
-    booksPerDay: number;
+
+export type Intersection = number;
+
+export interface Path {
+    streetNames: string[];
 }
-export interface Book {
-    id: number;
-    score: number;
+
+export interface Solution {
+    nbIntersections: number;
+    schedules: Schedule[];
 }
-export interface Assignment {
-    library: Library;
-    books: Book[];
+
+export interface Schedule {
+    intersection: Intersection;
+    nbStreets: number;
+    pattern: { streetName: string; duration: number; }[]
 }
-export type Solution = Assignment[];
