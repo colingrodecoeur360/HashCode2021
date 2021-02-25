@@ -3,9 +3,9 @@ import { saveFile } from "./saver";
 import { buildOutput } from "./solution";
 import { computeScore } from "./score";
 
-// run("a");
-// run("b");
-// run("c");
+run("a");
+run("b");
+run("c");
 run("d");
 run("e");
 run("f");
