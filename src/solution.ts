@@ -5,9 +5,17 @@ export function buildOutput(problem: Problem): Solution {
     const intersections: Record<number, Street[]> = {};
 
     const streetsByName: Record<string, Street> = {};
+
+    const times: number[] = [];
+
     problem.streets.forEach(street => {
+        times.push(street.travelTime);
         streetsByName[street.name] = street;
     });
+
+    // console.log(times.sort((a, b) => a - b));
+    // console.log(times.sort((a, b) => a - b).reverse());
+
 
     const streetFrequencies: Record<string, number> = {};
     let maxPossible = 0
@@ -20,13 +28,8 @@ export function buildOutput(problem: Problem): Solution {
     });
 
     const sortedScores = scores.sort((a, b) => a - b);
-    console.log(sortedScores)
-    console.log(sortedScores.reverse())
 
-    problem.paths.forEach((path, index) => {
-        if (scores[index] < sortedScores[499]) {
-            return;
-        }
+    problem.paths.forEach((path) => {
         path.streetNames.forEach(streetName => {
             if (! streetFrequencies[streetName]) {
                 streetFrequencies[streetName] = 0;
@@ -35,7 +38,6 @@ export function buildOutput(problem: Problem): Solution {
         });
     });
 
-    console.log(maxPossible);
     Object.keys(streetFrequencies).forEach(streetName => {
         const street = streetsByName[streetName];
         if (! intersections[street.endIntersection]) {
@@ -54,8 +56,8 @@ export function buildOutput(problem: Problem): Solution {
                 pattern: orderedStreets.map((street, streetIndex) => {
                     return {
                         streetName: street.name,
-                        duration: Math.min(streetIndex + 1, streetFrequencies[street.name])
-                        // duration: 1
+                        duration: 25
+                        // duration: Math.min(streetIndex + 1, streetFrequencies[street.name])
                     }
                 })
             };
