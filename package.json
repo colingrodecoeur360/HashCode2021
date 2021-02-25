@@ -1,0 +1,32 @@
+{
+  "name": "hashcode2021",
+  "scripts": {
+    "start": "ts-node ./src/main.ts",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "@types/chai": "^4.2.3",
+    "@types/chai-as-promised": "^7.1.2",
+    "@types/lodash": "^4.14.149",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.7",
+    "@types/sinon": "^7.5.0",
+    "@types/sinon-chai": "^3.2.3",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-chai-friendly": "^0.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "lodash": "^4.17.15",
+    "mocha": "^6.2.1",
+    "moment": "^2.24.0",
+    "prettier": "^1.19.0",
+    "sinon": "^7.5.0",
+    "sinon-chai": "^3.3.0",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.7.2"
+  }
+}
