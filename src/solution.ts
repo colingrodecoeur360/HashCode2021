@@ -10,7 +10,23 @@ export function buildOutput(problem: Problem): Solution {
     });
 
     const streetFrequencies: Record<string, number> = {};
+    let maxPossible = 0
+
+    const scores: number[] = [];
     problem.paths.forEach(path => {
+        const duration = _.sum(path.streetNames.slice(1).map(streetName => streetsByName[streetName].travelTime));
+        const maxScore = problem.BonusPoints + problem.Duration - duration;
+        scores.push(maxScore);
+    });
+
+    const sortedScores = scores.sort((a, b) => a - b);
+    console.log(sortedScores)
+    console.log(sortedScores.reverse())
+
+    problem.paths.forEach((path, index) => {
+        if (scores[index] < sortedScores[499]) {
+            return;
+        }
         path.streetNames.forEach(streetName => {
             if (! streetFrequencies[streetName]) {
                 streetFrequencies[streetName] = 0;
@@ -19,6 +35,7 @@ export function buildOutput(problem: Problem): Solution {
         });
     });
 
+    console.log(maxPossible);
     Object.keys(streetFrequencies).forEach(streetName => {
         const street = streetsByName[streetName];
         if (! intersections[street.endIntersection]) {
@@ -38,6 +55,7 @@ export function buildOutput(problem: Problem): Solution {
                     return {
                         streetName: street.name,
                         duration: Math.min(streetIndex + 1, streetFrequencies[street.name])
+                        // duration: 1
                     }
                 })
             };
